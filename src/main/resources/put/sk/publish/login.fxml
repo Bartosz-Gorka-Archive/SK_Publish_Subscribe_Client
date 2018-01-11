@@ -4,6 +4,8 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
@@ -12,7 +14,7 @@
    <children>
       <Pane prefHeight="291.0" prefWidth="254.0">
          <children>
-            <Button fx:id="buttonConnect" defaultButton="true" layoutX="18.0" layoutY="200.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="218.0" text="Connect to server" textAlignment="CENTER" />
+            <Button fx:id="buttonConnect" defaultButton="true" layoutX="18.0" layoutY="200.0" mnemonicParsing="false" onAction="#onConnect" prefHeight="27.0" prefWidth="218.0" text="Connect to server" textAlignment="CENTER" />
             <Label layoutX="18.0" layoutY="14.0" prefHeight="17.0" prefWidth="228.0" text="Login to Publish Subscribe">
                <font>
                   <Font name="Courier New Bold" size="14.0" />
@@ -24,6 +26,11 @@
             <TextField fx:id="inputPort" layoutX="28.0" layoutY="79.0" prefHeight="27.0" prefWidth="200.0" promptText="Port" />
             <TextField fx:id="inputUsername" layoutX="28.0" layoutY="135.0" prefHeight="27.0" prefWidth="200.0" promptText="Username" />
             <Separator layoutX="28.0" layoutY="179.0" prefHeight="2.0" prefWidth="200.0" />
+            <ImageView fx:id="loader" disable="true" fitHeight="60.0" fitWidth="150.0" layoutX="100.0" layoutY="145.0" pickOnBounds="true" preserveRatio="true" visible="false">
+               <image>
+                  <Image url="@loader.gif" />
+               </image>
+            </ImageView>
          </children></Pane>
    </children>
 </AnchorPane>

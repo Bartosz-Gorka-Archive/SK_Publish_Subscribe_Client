@@ -3,6 +3,7 @@ package put.sk.publish;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 
 import javax.swing.*;
 
@@ -30,6 +31,10 @@ public class LoginView {
      * Input with server PORT
      */
     public TextField inputPort;
+    /**
+     * Loader image
+     */
+    public ImageView loader;
 
     /**
      * Reset values inserted in text fields
@@ -53,8 +58,26 @@ public class LoginView {
         // TODO Validation
 
         int port = Integer.parseInt(portText);
+        blockButtons(true);
 
-        // TODO Loader
         // TODO Call connection to server
+    }
+
+    /**
+     * Block buttons and fields on view, show loader
+     * @param status Boolean status of action
+     */
+    private void blockButtons(Boolean status) {
+        // Fields
+        this.inputIP.setDisable(status);
+        this.inputPort.setDisable(status);
+        this.inputUsername.setDisable(status);
+
+        // Buttons
+        this.buttonConnect.setDisable(status);
+        this.buttonReset.setDisable(status);
+
+        // Loader
+        this.loader.setVisible(status);
     }
 }
