@@ -1,7 +1,9 @@
 package put.sk.publish;
 
+/**
+ * Connection to the server
+ */
 public class Connection {
-
     /**
      * Server host IP
      */

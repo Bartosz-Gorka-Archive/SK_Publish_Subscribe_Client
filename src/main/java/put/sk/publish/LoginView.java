@@ -4,7 +4,10 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
-public class Login {
+/**
+ * Login view
+ */
+public class LoginView {
     /**
      * Connection to server - button
      */
