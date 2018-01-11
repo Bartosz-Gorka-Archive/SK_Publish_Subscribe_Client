@@ -30,8 +30,9 @@ public class Login {
      * Reset values inserted in text fields
      * @param actionEvent Mouse click event
      */
-    public void clickReset(ActionEvent actionEvent) {
-        actionEvent.getSource();
-        System.out.println(actionEvent);
+    public void onReset(ActionEvent actionEvent) {
+        this.inputIP.clear();
+        this.inputPort.clear();
+        this.inputUsername.clear();
     }
 }
