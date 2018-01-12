@@ -21,7 +21,7 @@
                         <Font name="Courier" size="13.0" />
                      </font>
                   </Label>
-                  <TextArea fx:id="areaArticleText" editable="false" layoutX="10.0" layoutY="34.0" prefHeight="166.0" prefWidth="434.0" />
+                  <TextArea fx:id="areaArticleText" layoutX="10.0" layoutY="34.0" prefHeight="166.0" prefWidth="434.0" />
                </children></AnchorPane>
             <Button fx:id="buttonRead" layoutX="486.0" layoutY="32.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="155.0" text="Read article">
                <font>
@@ -40,13 +40,13 @@
             </Label>
             <ListView fx:id="listArticle" layoutX="256.0" layoutY="32.0" prefHeight="200.0" prefWidth="200.0" />
             <Separator layoutX="15.0" layoutY="247.0" prefHeight="2.0" prefWidth="445.0" />
-            <TextField fx:id="inputArticleTitle" editable="false" layoutX="23.0" layoutY="461.0" prefHeight="27.0" prefWidth="434.0" promptText="Article title" />
+            <TextField fx:id="inputArticleTitle" layoutX="23.0" layoutY="461.0" prefHeight="27.0" prefWidth="434.0" promptText="Article title" />
             <Button fx:id="buttonSend" layoutX="486.0" layoutY="280.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="155.0" text="Send article">
                <font>
                   <Font name="Courier Oblique" size="13.0" />
                </font>
             </Button>
-            <Button fx:id="buttonClear" layoutX="486.0" layoutY="316.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="155.0" text="Clear text">
+            <Button fx:id="buttonClear" layoutX="486.0" layoutY="316.0" mnemonicParsing="false" onAction="#onClearText" prefHeight="27.0" prefWidth="155.0" text="Clear text">
                <font>
                   <Font name="Courier Oblique" size="13.0" />
                </font>

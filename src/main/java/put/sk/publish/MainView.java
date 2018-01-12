@@ -1,5 +1,6 @@
 package put.sk.publish;
 
+import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
@@ -46,5 +47,21 @@ public class MainView {
      * Button send new article
      */
     public Button buttonSend;
+
+    /**
+     * Clear inputs to enable prepare new article
+     * @param actionEvent Event - clear action
+     */
+    public void onClearText(ActionEvent actionEvent) {
+        clearInputs();
+    }
+
+    /**
+     * Clear inputs
+     */
+    private void clearInputs() {
+        this.inputArticleTitle.clear();
+        this.areaArticleText.clear();
+    }
 
 }
