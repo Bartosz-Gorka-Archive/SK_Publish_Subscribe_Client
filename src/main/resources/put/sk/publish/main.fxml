@@ -5,24 +5,28 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="put.sk.publish.MainView">
    <children>
-      <Pane prefHeight="462.0" prefWidth="657.0">
+      <Pane prefHeight="516.0" prefWidth="657.0">
          <children>
-            <AnchorPane layoutX="14.0" layoutY="247.0" prefHeight="214.0" prefWidth="451.0">
+            <AnchorPane fx:id="groupSelectedArticle" layoutX="14.0" layoutY="247.0" prefHeight="214.0" prefWidth="451.0">
                <children>
                   <Label layoutX="10.0" layoutY="11.0" text="Selected article">
                      <font>
                         <Font name="Courier" size="13.0" />
                      </font>
                   </Label>
-                  <TextArea fx:id="areaArticleText" layoutX="10.0" layoutY="34.0" prefHeight="166.0" prefWidth="434.0" />
+                  <TextArea fx:id="areaArticleText" editable="false" layoutX="10.0" layoutY="34.0" prefHeight="166.0" prefWidth="434.0" />
                </children></AnchorPane>
-            <Button layoutX="486.0" layoutY="32.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="148.0" text="Button" />
+            <Button fx:id="buttonRead" layoutX="486.0" layoutY="32.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="155.0" text="Read article">
+               <font>
+                  <Font name="Courier Oblique" size="13.0" />
+               </font></Button>
             <ListView fx:id="listQueue" layoutX="21.0" layoutY="32.0" prefHeight="200.0" prefWidth="200.0" />
             <Label layoutX="21.0" layoutY="14.0" text="Queue list">
                <font>
@@ -36,6 +40,22 @@
             </Label>
             <ListView fx:id="listArticle" layoutX="256.0" layoutY="32.0" prefHeight="200.0" prefWidth="200.0" />
             <Separator layoutX="15.0" layoutY="247.0" prefHeight="2.0" prefWidth="445.0" />
+            <TextField fx:id="inputArticleTitle" editable="false" layoutX="23.0" layoutY="461.0" prefHeight="27.0" prefWidth="434.0" promptText="Article title" />
+            <Button fx:id="buttonSend" layoutX="486.0" layoutY="280.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="155.0" text="Send article">
+               <font>
+                  <Font name="Courier Oblique" size="13.0" />
+               </font>
+            </Button>
+            <Button fx:id="buttonClear" layoutX="486.0" layoutY="316.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="155.0" text="Clear text">
+               <font>
+                  <Font name="Courier Oblique" size="13.0" />
+               </font>
+            </Button>
+            <Button fx:id="buttonWrite" layoutX="486.0" layoutY="68.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="155.0" text="Write new article">
+               <font>
+                  <Font name="Courier Oblique" size="13.0" />
+               </font>
+            </Button>
          </children>
       </Pane>
    </children>
