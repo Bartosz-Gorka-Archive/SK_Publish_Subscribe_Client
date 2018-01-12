@@ -6,7 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 
-import javax.swing.*;
+import java.net.UnknownHostException;
 
 /**
  * Login view
@@ -66,10 +66,16 @@ public class LoginView {
                     blockButtons(true);
 
                     // Connection with server
-                    // TODO Call connection to server
+                    Client.loginToServer(IP, port, userName);
+
+                    // Open second view
+                    // TODO view
                 }
             } catch (NumberFormatException ex) {
                 showAlert("Invalid format", "Port should be integer value.");
+            } catch (UnknownHostException e) {
+                blockButtons(false);
+                showAlert("Server address", "We can not find server.\nPlease insert correct IP / domain name.");
             }
         }
     }

@@ -6,6 +6,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.net.UnknownHostException;
+
 /**
  * Main module in Publish Subscribe application
  */
@@ -36,5 +38,20 @@ public class Client extends Application {
         primaryStage.setScene(new Scene(root, 260, 280));
         primaryStage.setResizable(false);
         primaryStage.show();
+    }
+
+    /**
+     * Login to server API
+     * @param IP Server IP or domain
+     * @param port Port
+     * @param userName Username
+     */
+    public static void loginToServer(String IP, int port, String userName) throws UnknownHostException {
+        // Create new connection
+        Connection connection = new Connection();
+
+        // Check domain or IP
+        connection.findServerIP(IP);
+
     }
 }
