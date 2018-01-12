@@ -66,10 +66,14 @@ public class LoginView {
                     blockButtons(true);
 
                     // Connection with server
-                    Client.loginToServer(IP, port, userName);
+                    boolean result = Client.loginToServer(IP, port, userName);
 
-                    // Open second view
-                    // TODO view
+                    if (result) {
+                        Client.openMainView();
+                    } else {
+                        blockButtons(false);
+                        showAlert("Can not connect", "We can not login to server.\nTry again later.");
+                    }
                 }
             } catch (NumberFormatException ex) {
                 showAlert("Invalid format", "Port should be integer value.");

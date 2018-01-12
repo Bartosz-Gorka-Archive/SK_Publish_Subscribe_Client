@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.UnknownHostException;
 
 /**
@@ -16,6 +17,10 @@ public class Client extends Application {
      * Current stage
      */
     private static Stage stage;
+
+    /**
+     * Connection service to allow operations with server
+     */
 
     /**
      * Main method, launch application
@@ -34,10 +39,10 @@ public class Client extends Application {
     public void start(Stage primaryStage) throws Exception{
         stage = primaryStage;
         Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
-        primaryStage.setTitle("LoginView");
-        primaryStage.setScene(new Scene(root, 260, 280));
-        primaryStage.setResizable(false);
-        primaryStage.show();
+        stage.setTitle("LoginView");
+        stage.setScene(new Scene(root, 260, 280));
+        stage.setResizable(false);
+        stage.show();
     }
 
     /**
@@ -45,13 +50,30 @@ public class Client extends Application {
      * @param IP Server IP or domain
      * @param port Port
      * @param userName Username
+     * @return Action status, true if correct login
      */
-    public static void loginToServer(String IP, int port, String userName) throws UnknownHostException {
-        // Create new connection
-        Connection connection = new Connection();
+    public static boolean loginToServer(String IP, int port, String userName) throws UnknownHostException {
+        // Check IP from Domain name
+        DNSChecker dnsChecker = new DNSChecker();
+        String serverIP = dnsChecker.findServerIP(IP);
 
-        // Check domain or IP
-        connection.findServerIP(IP);
+        // Connection
+        ConnectionService connectionService = new ConnectionService(serverIP, port, userName);
+        return connectionService.login();
+    }
 
+    /**
+     * Change active window to MainView
+     */
+    public static void openMainView() {
+        try {
+            Parent root = FXMLLoader.load(Client.class.getResource("main.fxml"));
+            stage.setTitle("Publish Subscribe");
+            stage.setScene(new Scene(root, 800, 600));
+            stage.setResizable(false);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

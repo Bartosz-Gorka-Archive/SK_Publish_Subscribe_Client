@@ -76,6 +76,9 @@ public class Connection {
                 }
             }
 
+            // Close socket
+            socket.close();
+
             // Return prepared response as String UTF-8
             return new String(responseBytes, StandardCharsets.UTF_8);
         }
