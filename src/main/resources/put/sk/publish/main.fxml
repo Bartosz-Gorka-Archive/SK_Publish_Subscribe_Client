@@ -6,6 +6,8 @@
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
@@ -21,9 +23,9 @@
                         <Font name="Courier" size="13.0" />
                      </font>
                   </Label>
-                  <TextArea fx:id="areaArticleText" layoutX="10.0" layoutY="34.0" prefHeight="166.0" prefWidth="434.0" />
+                  <TextArea fx:id="areaArticleText" editable="false" layoutX="10.0" layoutY="34.0" prefHeight="166.0" prefWidth="434.0" />
                </children></AnchorPane>
-            <Button fx:id="buttonRead" layoutX="486.0" layoutY="32.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="155.0" text="Read article">
+            <Button fx:id="buttonRead" disable="true" layoutX="486.0" layoutY="32.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="155.0" text="Read article">
                <font>
                   <Font name="Courier Oblique" size="13.0" />
                </font></Button>
@@ -40,22 +42,34 @@
             </Label>
             <ListView fx:id="listArticle" layoutX="256.0" layoutY="32.0" prefHeight="200.0" prefWidth="200.0" />
             <Separator layoutX="15.0" layoutY="247.0" prefHeight="2.0" prefWidth="445.0" />
-            <TextField fx:id="inputArticleTitle" layoutX="23.0" layoutY="461.0" prefHeight="27.0" prefWidth="434.0" promptText="Article title" />
-            <Button fx:id="buttonSend" layoutX="486.0" layoutY="280.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="155.0" text="Send article">
+            <TextField fx:id="inputArticleTitle" editable="false" layoutX="23.0" layoutY="461.0" prefHeight="27.0" prefWidth="434.0" promptText="Article title" />
+            <Button fx:id="buttonSend" disable="true" layoutX="486.0" layoutY="280.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="155.0" text="Send article">
                <font>
                   <Font name="Courier Oblique" size="13.0" />
                </font>
             </Button>
-            <Button fx:id="buttonClear" layoutX="486.0" layoutY="316.0" mnemonicParsing="false" onAction="#onClearText" prefHeight="27.0" prefWidth="155.0" text="Clear text">
+            <Button fx:id="buttonClear" disable="true" layoutX="486.0" layoutY="316.0" mnemonicParsing="false" onAction="#onClearText" prefHeight="27.0" prefWidth="155.0" text="Clear text">
                <font>
                   <Font name="Courier Oblique" size="13.0" />
                </font>
             </Button>
-            <Button fx:id="buttonWrite" layoutX="486.0" layoutY="68.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="155.0" text="Write new article">
+            <Button fx:id="buttonWrite" disable="true" layoutX="486.0" layoutY="68.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="155.0" text="Write new article">
                <font>
                   <Font name="Courier Oblique" size="13.0" />
                </font>
             </Button>
+            <AnchorPane fx:id="groupLoader" layoutX="156.0" layoutY="147.0" prefHeight="200.0" prefWidth="200.0" visible="false">
+               <children>
+                  <ImageView fitHeight="96.0" fitWidth="132.0" layoutX="45.0" layoutY="33.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@loader.gif" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="46.0" layoutY="113.0" text="Loading data">
+                     <font>
+                        <Font name="Courier Oblique" size="13.0" />
+                     </font></Label>
+               </children></AnchorPane>
          </children>
       </Pane>
    </children>
