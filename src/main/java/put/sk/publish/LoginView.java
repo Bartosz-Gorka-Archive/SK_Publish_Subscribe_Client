@@ -1,6 +1,7 @@
 package put.sk.publish;
 
 import javafx.event.ActionEvent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
@@ -55,12 +56,43 @@ public class LoginView {
         String portText = this.inputPort.getText();
         String userName = this.inputUsername.getText();
 
-        // TODO Validation
+        if(checkCorrectData(IP) && checkCorrectData(userName) && checkCorrectData(portText)) {
+            try {
+                int port = Integer.parseInt(portText);
+                if(port <= 0) {
+                    showAlert("Invalid value", "Port should be greater than zero.");
+                } else {
+                    // Block fields
+                    blockButtons(true);
 
-        int port = Integer.parseInt(portText);
-        blockButtons(true);
+                    // Connection with server
+                    // TODO Call connection to server
+                }
+            } catch (NumberFormatException ex) {
+                showAlert("Invalid format", "Port should be integer value.");
+            }
+        }
+    }
 
-        // TODO Call connection to server
+    /**
+     * Show alert in login view
+     * @param header Header in alert
+     * @param message Message to show
+     */
+    private void showAlert(String header, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setContentText(message);
+        alert.setHeaderText(header);
+        alert.show();
+    }
+
+    /**
+     * Check correct text. Text should be not empty (after reduce spaces).
+     * @param text Test to check
+     * @return Status of date
+     */
+    private boolean checkCorrectData(String text) {
+        return !text.trim().isEmpty();
     }
 
     /**
