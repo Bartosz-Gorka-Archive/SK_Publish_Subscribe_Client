@@ -96,7 +96,18 @@ public class Client extends Application {
      * @return ArrayList with articles
      */
     public static ArrayList<Article> loadArticles(Topic selectedTopic) {
-        return server.fetchTopicArticles(selectedTopic, 0);
+        // Count articles on start
+        int lastDownload = -1;
+        int count = 0;
+
+        // Load articles
+        while(lastDownload != count) {
+            lastDownload = count;
+            server.fetchTopicArticles(selectedTopic, count);
+            count = selectedTopic.getArticles().size();
+        }
+
+        return selectedTopic.getArticles();
     }
 
     /**

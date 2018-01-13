@@ -20,7 +20,7 @@ public class Topic {
      * @param name Topic name
      */
     public Topic(String name) {
-        this.articles = new ArrayList();
+        this.articles = new ArrayList<>();
         this.name = name;
     }
 
@@ -52,9 +52,16 @@ public class Topic {
     /**
      * Add article to Topic
      * @param article Article to add
-     * @return Operation status
      */
-    public boolean addArticle(Article article) {
-        return this.articles.add(article);
+    public void addArticle(Article article) {
+        this.articles.add(article);
+    }
+
+    /**
+     * Getter - Articles list
+     * @return List with articles
+     */
+    public ArrayList<Article> getArticles() {
+        return this.articles;
     }
 }

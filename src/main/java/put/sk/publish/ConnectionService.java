@@ -163,23 +163,19 @@ public class ConnectionService {
                     } else {
                         // Read articles
                         Article article = new Article(data.get(i), data.get(i + 1), selectedTopic);
-                        result.add(article);
+                        selectedTopic.addArticle(article);
                     }
                 }
 
-                // Append result to topic
-                selectedTopic.setArticles(result);
+                // Set action as success
                 this.actionSuccess = true;
-
-                // Return result
-                return result;
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        // Return empty list
-        return new ArrayList<>();
+        // Return result
+        return selectedTopic.getArticles();
     }
 
     /**
