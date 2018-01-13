@@ -1,10 +1,12 @@
 package put.sk.publish;
 
-import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 
 import java.net.UnknownHostException;
 
@@ -39,9 +41,9 @@ public class LoginView {
 
     /**
      * Reset values inserted in text fields
-     * @param actionEvent Action event (mouse click)
      */
-    public void onReset(ActionEvent actionEvent) {
+    @FXML
+    public void onReset() {
         this.inputIP.clear();
         this.inputPort.clear();
         this.inputUsername.clear();
@@ -49,9 +51,9 @@ public class LoginView {
 
     /**
      * Connection to server - action to bind API
-     * @param actionEvent Action event (mouse click)
      */
-    public void onConnect(ActionEvent actionEvent) {
+    @FXML
+    public void onConnect() {
         String IP = this.inputIP.getText();
         String portText = this.inputPort.getText();
         String userName = this.inputUsername.getText();
@@ -121,5 +123,32 @@ public class LoginView {
 
         // Loader
         this.loader.setVisible(status);
+    }
+
+    /**
+     * Initialize - set inputs filters
+     */
+    @FXML
+    public void initialize() {
+        // Username with limit length
+        this.inputUsername.addEventFilter(KeyEvent.KEY_TYPED, new EventHandler<KeyEvent>() {
+            public void handle(KeyEvent event) {
+                if (inputUsername.getText().length() > 30) {
+                    event.consume();
+                }
+            }
+        });
+
+        // Port with only numbers, max length
+        this.inputPort.addEventFilter(KeyEvent.KEY_TYPED, new EventHandler<KeyEvent>() {
+            public void handle(KeyEvent event) {
+                if (!event.getCharacter().matches("[0-9]")) {
+                    event.consume();
+                }
+                if (inputPort.getText().length() > 10) {
+                    event.consume();
+                }
+            }
+        });
     }
 }
