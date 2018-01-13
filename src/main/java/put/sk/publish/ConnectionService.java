@@ -2,6 +2,8 @@ package put.sk.publish;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Connection service to enable sending and receive message
@@ -23,6 +25,10 @@ public class ConnectionService {
      * Last action status
      */
     private boolean actionSuccess;
+    /**
+     * Last action message from server
+     */
+    private String actionMessage;
 
     /**
      * Connection service constructor
@@ -148,7 +154,7 @@ public class ConnectionService {
 
                 // Prepare articles list
                 for(int i = 0; i < resultSize; i += 2) {
-                    Article article = new Article(data.get(i), data.get(i+1), selectedTopic.getName());
+                    Article article = new Article(data.get(i), data.get(i+1), selectedTopic);
                     result.add(article);
                 }
 
@@ -199,7 +205,7 @@ public class ConnectionService {
                 // Insert data to article
                 System.out.println(data);
 
-                // TODO Append data to article
+                // TODO Article details
 
                 // Set action as success
                 this.actionSuccess = true;
@@ -217,6 +223,147 @@ public class ConnectionService {
      * @return Boolean action status
      */
     public boolean isActionSuccess() {
-        return actionSuccess;
+        return this.actionSuccess;
+    }
+
+    /**
+     * Getter - last action message
+     * @return Last action message (from API)
+     */
+    public String getActionMessage() {
+        return this.actionMessage;
+    }
+
+    /**
+     * API - Add topic
+     * @param topicName Topic to add
+     * @return Action status, true on success
+     */
+    public boolean addTopic(String topicName) {
+        // Prepare request parameters
+        ArrayList<String> requestData = new ArrayList();
+        requestData.add("ADD_QUEUE");
+        requestData.add(USERNAME);
+        requestData.add(topicName);
+
+        // Create API Parser
+        APIParser apiParser = new APIParser();
+        String request = apiParser.buildRequest(requestData);
+
+        // Action status
+        this.actionSuccess = false;
+
+        // Connection
+        Connection connection = new Connection(IP_ADDRESS, IP_PORT);
+        try {
+            // Transfer data to API, receive and parse response
+            String response = connection.transfer(request);
+            ArrayList<String> data = apiParser.parseResponse(response);
+
+            // We don't get error - check
+            if(data.get(0).equals("OK")) {
+                // Set action as success
+                this.actionSuccess = true;
+
+                // Return success
+                return true;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Return error
+        return false;
+    }
+
+    /**
+     * Add subscribe - topic
+     * @param selectedTopic Topic to subscribe
+     * @return Action status
+     */
+    public boolean addSubscribe(Topic selectedTopic) {
+        // Prepare request parameters
+        ArrayList<String> requestData = new ArrayList();
+        requestData.add("ADD_SUBSCRIBER");
+        requestData.add(USERNAME);
+        requestData.add(selectedTopic.getName());
+
+        // Create API Parser
+        APIParser apiParser = new APIParser();
+        String request = apiParser.buildRequest(requestData);
+
+        // Action status
+        this.actionSuccess = false;
+
+        // Connection
+        Connection connection = new Connection(IP_ADDRESS, IP_PORT);
+        try {
+            // Transfer data to API, receive and parse response
+            String response = connection.transfer(request);
+            ArrayList<String> data = apiParser.parseResponse(response);
+
+            // We don't get error - check
+            if(data.get(0).equals("OK")) {
+                // Set action as success
+                this.actionSuccess = true;
+
+                // Return success
+                return true;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Return error
+        return false;
+    }
+
+    /**
+     * Add new article - API
+     * @param selectedTopic Topic
+     * @param title Article title
+     * @param content Article content
+     * @return Action status, true if success
+     */
+    public boolean addArticle(Topic selectedTopic, String title, String content) {
+        // Prepare request parameters
+        ArrayList<String> requestData = new ArrayList();
+        requestData.add("ADD_ARTICLE");
+        requestData.add(USERNAME);
+        requestData.add(selectedTopic.getName());
+        requestData.add(title);
+        requestData.add(content);
+
+        System.out.println(requestData);
+
+        // Create API Parser
+        APIParser apiParser = new APIParser();
+        String request = apiParser.buildRequest(requestData);
+
+        // Action status
+        this.actionSuccess = false;
+
+        // Connection
+        Connection connection = new Connection(IP_ADDRESS, IP_PORT);
+        try {
+            // Transfer data to API, receive and parse response
+            String response = connection.transfer(request);
+            ArrayList<String> data = apiParser.parseResponse(response);
+            System.out.println(data);
+
+            // We don't get error - check
+            if(data.get(0).equals("OK")) {
+                // Set action as success
+                this.actionSuccess = true;
+
+                // Return success
+                return true;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Return error
+        return false;
     }
 }

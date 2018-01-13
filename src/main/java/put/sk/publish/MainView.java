@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 
 import java.util.ArrayList;
@@ -64,6 +65,22 @@ public class MainView {
      * Button cancel send new article
      */
     public Button buttonCancel;
+    /**
+     * Button create new topic
+     */
+    public Button buttonCreateTopic;
+    /**
+     * Input with new topic title
+     */
+    public TextField inputTopicName;
+    /**
+     * Input server response
+     */
+    public TextField inputServerResponse;
+    /**
+     * Button add subscribe to topic
+     */
+    public Button buttonAddSubscribe;
 
     /**
      * Clear inputs to enable prepare new article
@@ -101,6 +118,7 @@ public class MainView {
     /**
      * Load topic lists from Client and set in listView
      */
+    @FXML
     public void loadTopicList() {
         ArrayList<Topic> topics = Client.loadTopics();
         ObservableList<Topic> topicList = FXCollections.observableList(topics);
@@ -110,6 +128,7 @@ public class MainView {
     /**
      * Load articles for selected topic
      */
+    @FXML
     public void onLoadArticles() {
         Topic selectedTopic = (Topic) this.listQueue.getSelectionModel().getSelectedItem();
         if(selectedTopic != null) {
@@ -125,6 +144,7 @@ public class MainView {
     /**
      * Read selected article - download text
      */
+    @FXML
     public void onReadArticle() {
         // Get selected article from list
         Article selectedArticle = (Article) this.listArticle.getSelectionModel().getSelectedItem();
@@ -143,6 +163,7 @@ public class MainView {
     /**
      * Write new article - action
      */
+    @FXML
     public void onWriteNewArticle() {
         Topic selectedTopic = (Topic) this.listQueue.getSelectionModel().getSelectedItem();
         if(selectedTopic != null) {
@@ -153,6 +174,7 @@ public class MainView {
     /**
      * Cancel prepare new article
      */
+    @FXML
     public void onCancelSend() {
         this.prepareSendEnv(false);
     }
@@ -161,6 +183,7 @@ public class MainView {
      * Prepare sending environment - disable / enable buttons, list ...
      * @param status Boolean sending ready (true)
      */
+    @FXML
     private void prepareSendEnv(boolean status) {
         // Clear inputs
         this.clearInputs();
@@ -169,6 +192,7 @@ public class MainView {
         this.buttonLoadArticles.setDisable(status);
         this.buttonRead.setDisable(status);
         this.buttonWrite.setDisable(status);
+        this.buttonAddSubscribe.setDisable(status);
 
         // Lists
         this.listArticle.setDisable(status);
@@ -179,6 +203,110 @@ public class MainView {
 
         // Cancel button
         this.buttonCancel.setVisible(status);
+    }
+
+    /**
+     * Create new topic
+     */
+    @FXML
+    public void onCreateTopic() {
+        // Clear response from server and block button
+        this.inputServerResponse.clear();
+        this.buttonCreateTopic.setDisable(true);
+
+        // Get text from input
+        String topicName = this.inputTopicName.getText().trim();
+
+        // Try add new topic
+        if(Client.addNewTopic(topicName)) {
+            // Success - clear input, load topic list
+            this.inputTopicName.clear();
+            this.loadTopicList();
+        } else {
+            // Show error
+            this.inputServerResponse.setText("Can not add new topic.");
+        }
+
+        // Enable button
+        this.buttonCreateTopic.setDisable(false);
+    }
+
+    /**
+     * Change text in topic title input - action
+     */
+    @FXML
+    public void onChangeTopicTitle(KeyEvent keyEvent) {
+//        this.inputTopicName.addEventFilter(KeyEvent.KEY_TYPED, );
+//        System.out.println(keyEvent.getSource());
+//        System.out.println(keyEvent.getText());
+//        System.out.println(keyEvent.getCharacter());
+//        String c = keyEvent.getCharacter();
+//        if("1234567890".contains(c)) {}
+//        else {
+//            keyEvent.consume();
+//        }
+//        String text = this.inputTopicName.getText();
+    }
+
+    /**
+     * Add subscribe to topic
+     */
+    @FXML
+    public void onAddSubscribe() {
+        // Clear response from server
+        this.inputServerResponse.clear();
+
+        // Block button
+        this.buttonAddSubscribe.setDisable(true);
+
+        // Get selected topic
+        Topic selectedTopic = (Topic) this.listQueue.getSelectionModel().getSelectedItem();
+        if(selectedTopic != null) {
+            // Send action to server
+            Client.addSubscribe(selectedTopic);
+            this.inputServerResponse.setText("Subscription applied.");
+        } else {
+            // Set error message
+            this.inputServerResponse.setText("You mast select topic.");
+        }
+
+        // Enable button
+        this.buttonAddSubscribe.setDisable(false);
+    }
+
+    /**
+     * Send article to API
+     */
+    @FXML
+    public void onSendArticle() {
+        // Get text from inputs
+        String title = this.inputArticleTitle.getText().trim();
+        String content = this.areaArticleText.getText().trim();
+
+        System.out.println(content);
+
+        // Block button
+        this.buttonSend.setDisable(true);
+
+        Topic selectedTopic = (Topic) this.listQueue.getSelectionModel().getSelectedItem();
+        if(selectedTopic != null) {
+            // Check size
+            if(checkSize(title, 1, 50) && checkSize(content, 1, 11000)) {
+                Client.addNewArticle(selectedTopic, title, content);
+                this.prepareSendEnv(false);
+            }
+        } else {
+            // Set error message
+            this.inputServerResponse.setText("You mast select topic.");
+        }
+
+        // Enable button
+        this.buttonSend.setDisable(false);
+    }
+
+    private boolean checkSize(String text, int min, int max) {
+        int length = text.length();
+        return (length >= min && length <= max);
     }
 
 }

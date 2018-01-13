@@ -12,9 +12,9 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="put.sk.publish.MainView">
+<AnchorPane prefHeight="624.0" prefWidth="657.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="put.sk.publish.MainView">
    <children>
-      <Pane prefHeight="516.0" prefWidth="657.0">
+      <Pane prefHeight="637.0" prefWidth="657.0">
          <children>
             <AnchorPane fx:id="groupSelectedArticle" layoutX="14.0" layoutY="247.0" prefHeight="214.0" prefWidth="451.0">
                <children>
@@ -30,12 +30,12 @@
                   <Font name="Courier Oblique" size="13.0" />
                </font></Button>
             <ListView fx:id="listQueue" layoutX="21.0" layoutY="32.0" prefHeight="200.0" prefWidth="200.0" />
-            <Label layoutX="21.0" layoutY="14.0" text="Queue list">
+            <Label layoutX="21.0" layoutY="14.0" text="Topics list">
                <font>
                   <Font name="Courier" size="13.0" />
                </font>
             </Label>
-            <Label layoutX="262.0" layoutY="13.0" text="Article list">
+            <Label layoutX="262.0" layoutY="13.0" text="Articles list">
                <font>
                   <Font name="Courier" size="13.0" />
                </font>
@@ -43,7 +43,7 @@
             <ListView fx:id="listArticle" layoutX="256.0" layoutY="32.0" prefHeight="200.0" prefWidth="200.0" />
             <Separator layoutX="15.0" layoutY="247.0" prefHeight="2.0" prefWidth="445.0" />
             <TextField fx:id="inputArticleTitle" layoutX="23.0" layoutY="461.0" prefHeight="27.0" prefWidth="434.0" promptText="Article title" />
-            <Button fx:id="buttonSend" disable="true" layoutX="486.0" layoutY="280.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="155.0" text="Send article">
+            <Button fx:id="buttonSend" disable="true" layoutX="486.0" layoutY="280.0" mnemonicParsing="false" onAction="#onSendArticle" prefHeight="27.0" prefWidth="155.0" text="Send article">
                <font>
                   <Font name="Courier Oblique" size="13.0" />
                </font>
@@ -76,6 +76,29 @@
                </font>
             </Button>
             <Button fx:id="buttonCancel" layoutX="486.0" layoutY="352.0" mnemonicParsing="false" onAction="#onCancelSend" prefHeight="27.0" prefWidth="155.0" text="Cancel" visible="false">
+               <font>
+                  <Font name="Courier Oblique" size="13.0" />
+               </font>
+            </Button>
+            <Separator layoutX="14.0" layoutY="503.0" prefHeight="3.0" prefWidth="451.0" />
+            <Button fx:id="buttonCreateTopic" layoutX="486.0" layoutY="530.0" mnemonicParsing="false" onAction="#onCreateTopic" prefHeight="27.0" prefWidth="155.0" text="Create new topic">
+               <font>
+                  <Font name="Courier Oblique" size="13.0" />
+               </font>
+            </Button>
+            <TextField fx:id="inputTopicName" layoutX="23.0" layoutY="530.0" onKeyReleased="#onChangeTopicTitle" prefHeight="27.0" prefWidth="434.0" promptText="Topic title" />
+            <Label layoutX="23.0" layoutY="510.0" text="New topic">
+               <font>
+                  <Font name="Courier" size="13.0" />
+               </font>
+            </Label>
+            <Separator layoutX="14.0" layoutY="574.0" prefHeight="3.0" prefWidth="632.0" />
+            <TextField fx:id="inputServerResponse" editable="false" layoutX="23.0" layoutY="589.0" prefHeight="27.0" prefWidth="620.0" promptText="Server response">
+               <font>
+                  <Font name="Courier Oblique" size="12.0" />
+               </font>
+            </TextField>
+            <Button fx:id="buttonAddSubscribe" layoutX="486.0" layoutY="136.0" mnemonicParsing="false" onAction="#onAddSubscribe" prefHeight="27.0" prefWidth="155.0" text="Add subscribe">
                <font>
                   <Font name="Courier Oblique" size="13.0" />
                </font>

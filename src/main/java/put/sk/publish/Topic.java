@@ -48,4 +48,13 @@ public class Topic {
     public void setArticles(ArrayList<Article> articles) {
         this.articles = articles;
     }
+
+    /**
+     * Add article to Topic
+     * @param article Article to add
+     * @return Operation status
+     */
+    public boolean addArticle(Article article) {
+        return this.articles.add(article);
+    }
 }

@@ -13,9 +13,9 @@ public class Article {
      */
     private String title;
     /**
-     * Topic name
+     * Topic - parent
      */
-    private String topicName;
+    private Topic topic;
     /**
      * Loaded details status
      */
@@ -26,10 +26,10 @@ public class Article {
      * @param fileName Article fileName
      * @param title Article title
      */
-    public Article(String fileName, String title, String topicName) {
+    public Article(String fileName, String title, Topic topic) {
         this.fileName = fileName;
         this.title = title;
-        this.topicName = topicName;
+        this.topic = topic;
         this.loaded = false;
     }
 
@@ -55,7 +55,7 @@ public class Article {
      * @return Article's topic name
      */
     public String getTopicName() {
-        return this.topicName;
+        return this.topic.getName();
     }
 
     /**
@@ -65,4 +65,5 @@ public class Article {
     public boolean isLoaded() {
         return loaded;
     }
+
 }

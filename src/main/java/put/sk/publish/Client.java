@@ -73,7 +73,7 @@ public class Client extends Application {
         try {
             Parent root = FXMLLoader.load(Client.class.getResource("main.fxml"));
             stage.setTitle("Publish Subscribe");
-            stage.setScene(new Scene(root, 800, 600));
+            stage.setScene(new Scene(root, 660, 630));
             stage.setResizable(false);
 
             stage.show();
@@ -120,5 +120,34 @@ public class Client extends Application {
             // We must load data from API
             return server.loadArticleDetails(selectedArticle);
         }
+    }
+
+    /**
+     * Insert new topic on server
+     * @param topicName Topic name to insert
+     * @return Action status
+     */
+    public static boolean addNewTopic(String topicName) {
+        return server.addTopic(topicName);
+    }
+
+    /**
+     * Add subscribe to topic
+     * @param selectedTopic Topic to subscribe
+     * @return Action status
+     */
+    public static boolean addSubscribe(Topic selectedTopic) {
+        return server.addSubscribe(selectedTopic);
+    }
+
+    /**
+     * Add new article
+     * @param selectedTopic Topic
+     * @param title Article title
+     * @param content Article content
+     * @return Action status
+     */
+    public static boolean addNewArticle(Topic selectedTopic, String title, String content) {
+        return server.addArticle(selectedTopic, title, content);
     }
 }
