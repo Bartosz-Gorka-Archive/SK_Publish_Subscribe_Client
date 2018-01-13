@@ -11,6 +11,10 @@ import java.nio.charset.StandardCharsets;
  */
 public class Connection {
     /**
+     * Package length
+     */
+    private static final int PACKAGE_LENGTH = 12000;
+    /**
      * Server host IP
      */
     private String hostIP;
@@ -62,10 +66,10 @@ public class Connection {
             }
 
             // Receive response
-            byte[] responseBytes = new byte[12000];
+            byte[] responseBytes = new byte[PACKAGE_LENGTH];
             InputStream inputStream = socket.getInputStream();
 
-            int MAX_LENGTH = 12000;
+            int MAX_LENGTH = PACKAGE_LENGTH;
             for(int i = 0; i < MAX_LENGTH; i++) {
                 int singleChar = inputStream.read();
                 if (singleChar >= 0) {

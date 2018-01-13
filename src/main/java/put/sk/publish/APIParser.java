@@ -8,8 +8,17 @@ import java.util.List;
  * API Parser
  */
 public class APIParser {
+    /**
+     * Package length (char)
+     */
     private static final int PACKAGE_LENGTH = 12000;
+    /**
+     * Special char to split options
+     */
     private static final String SPLIT_CHAR = "\r";
+    /**
+     * Special char to insert on empty places
+     */
     private static final String EMPTY_CHAR = "\n";
 
     /**
