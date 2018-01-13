@@ -126,6 +126,7 @@ public class MainView {
             }
         });
 
+        this.inputServerResponse.setStyle("-fx-text-inner-color: red;");
 
         // Hide loader
         this.loader(false);
@@ -155,6 +156,7 @@ public class MainView {
         ArrayList<Topic> topics = Client.loadTopics();
         ObservableList<Topic> topicList = FXCollections.observableList(topics);
         this.listQueue.setItems(topicList);
+        this.inputServerResponse.setText("Topics loaded.");
     }
 
     /**
@@ -162,15 +164,21 @@ public class MainView {
      */
     @FXML
     public void onLoadArticles() {
+        this.inputServerResponse.clear();
+
         Topic selectedTopic = (Topic) this.listQueue.getSelectionModel().getSelectedItem();
         if(selectedTopic != null) {
             ArrayList<Article> articles = Client.loadArticles(selectedTopic);
             ObservableList<Article> articlesList = FXCollections.observableList(articles);
             this.listArticle.setItems(articlesList);
             this.buttonRead.setDisable(!Client.isActionSuccess());
-        }
 
-        // TODO Enable add subscription to topic
+            if(!Client.isActionSuccess()) {
+                this.inputServerResponse.setText(Client.getAPIResponse());
+            } else {
+                this.inputServerResponse.setText("Articles loaded.");
+            }
+        }
     }
 
     /**
@@ -178,6 +186,8 @@ public class MainView {
      */
     @FXML
     public void onReadArticle() {
+        this.inputServerResponse.clear();
+
         // Block button
         this.buttonRead.setDisable(true);
 
@@ -207,6 +217,7 @@ public class MainView {
      */
     @FXML
     public void onWriteNewArticle() {
+        this.inputServerResponse.clear();
         Topic selectedTopic = (Topic) this.listQueue.getSelectionModel().getSelectedItem();
         if(selectedTopic != null) {
             this.prepareSendEnv(true);
@@ -264,6 +275,7 @@ public class MainView {
             // Success - clear input, load topic list
             this.inputTopicName.clear();
             this.loadTopicList();
+            this.inputServerResponse.setText("Topic added.");
         } else {
             // Show error
             this.inputServerResponse.setText("Can not add new topic.");
@@ -271,23 +283,6 @@ public class MainView {
 
         // Enable button
         this.buttonCreateTopic.setDisable(false);
-    }
-
-    /**
-     * Change text in topic title input - action
-     */
-    @FXML
-    public void onChangeTopicTitle(KeyEvent keyEvent) {
-//        this.inputTopicName.addEventFilter(KeyEvent.KEY_TYPED, );
-//        System.out.println(keyEvent.getSource());
-//        System.out.println(keyEvent.getText());
-//        System.out.println(keyEvent.getCharacter());
-//        String c = keyEvent.getCharacter();
-//        if("1234567890".contains(c)) {}
-//        else {
-//            keyEvent.consume();
-//        }
-//        String text = this.inputTopicName.getText();
     }
 
     /**
@@ -334,6 +329,7 @@ public class MainView {
             if(checkSize(title, 1, 50) && checkSize(content, 1, 11000)) {
                 Client.addNewArticle(selectedTopic, title, content);
                 this.prepareSendEnv(false);
+                this.inputServerResponse.setText("Article sent.");
             }
         } else {
             // Set error message

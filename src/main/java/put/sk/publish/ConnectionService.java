@@ -148,6 +148,9 @@ public class ConnectionService {
 
             if(data.get(0).equals("ERROR")) {
                 this.actionSuccess = false;
+                if(data.size() > 1) {
+                    this.actionMessage = data.get(1);
+                }
             } else {
                 // Prepare result
                 int resultSize = data.size();
@@ -218,6 +221,10 @@ public class ConnectionService {
 
                 // Set action as success
                 this.actionSuccess = true;
+            } else {
+                if(data.size() > 1) {
+                    this.actionMessage = data.get(1);
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();

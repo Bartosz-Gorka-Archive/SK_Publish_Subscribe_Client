@@ -86,7 +86,7 @@
                   <Font name="Courier Oblique" size="13.0" />
                </font>
             </Button>
-            <TextField fx:id="inputTopicName" layoutX="23.0" layoutY="530.0" onKeyReleased="#onChangeTopicTitle" prefHeight="27.0" prefWidth="434.0" promptText="Topic title" />
+            <TextField fx:id="inputTopicName" layoutX="23.0" layoutY="530.0" prefHeight="27.0" prefWidth="434.0" promptText="Topic title" />
             <Label layoutX="23.0" layoutY="510.0" text="New topic">
                <font>
                   <Font name="Courier" size="13.0" />

@@ -133,6 +133,14 @@ public class Client extends Application {
     }
 
     /**
+     * Getter - Check API response
+     * @return String with action message
+     */
+    public static String getAPIResponse() {
+        return server.getActionMessage();
+    }
+
+    /**
      * Load article details
      * @param selectedArticle Article to load
      * @return Article details
