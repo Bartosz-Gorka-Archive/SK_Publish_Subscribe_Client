@@ -56,7 +56,7 @@ public class Article {
      * @return Article description
      */
     public String articleDescription() {
-        return this.title + "@" + this.createDate;
+        return this.title + " @ " + this.createDate;
     }
 
     /**

@@ -95,8 +95,14 @@ public class MainView {
      */
     @FXML
     public void initialize() {
+        // Show loader
+        this.loader(true);
+
         // Topic list update
         this.loadTopicList();
+
+        // Hide loader
+        this.loader(false);
     }
 
     /**

@@ -43,12 +43,11 @@ public class Client extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         stage = primaryStage;
-        openMainView(); // TODO Only now, delete and uncomment code below
-//        Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
-//        stage.setTitle("LoginView");
-//        stage.setScene(new Scene(root, 260, 280));
-//        stage.setResizable(false);
-//        stage.show();
+        Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
+        stage.setTitle("LoginView");
+        stage.setScene(new Scene(root, 260, 280));
+        stage.setResizable(false);
+        stage.show();
     }
 
     /**
@@ -73,13 +72,13 @@ public class Client extends Application {
      * Change active window to MainView
      */
     public static void openMainView() {
-        server = new ConnectionService("127.0.0.1", 1445, "bartek"); // TODO Delete
         try {
             Parent root = FXMLLoader.load(Client.class.getResource("main.fxml"));
             stage.setTitle("Publish Subscribe");
             stage.setScene(new Scene(root, 660, 630));
+            stage.setX(stage.getX() / 2);
+            stage.setY(stage.getY() / 2);
             stage.setResizable(false);
-
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
