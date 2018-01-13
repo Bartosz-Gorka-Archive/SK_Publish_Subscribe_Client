@@ -58,7 +58,7 @@
                   <Font name="Courier Oblique" size="13.0" />
                </font>
             </Button>
-            <AnchorPane fx:id="groupLoader" layoutX="156.0" layoutY="147.0" prefHeight="200.0" prefWidth="200.0" visible="false">
+            <AnchorPane fx:id="groupLoader" layoutX="184.0" layoutY="232.0" prefHeight="200.0" prefWidth="200.0" visible="false">
                <children>
                   <ImageView fitHeight="96.0" fitWidth="132.0" layoutX="45.0" layoutY="33.0" pickOnBounds="true" preserveRatio="true">
                      <image>

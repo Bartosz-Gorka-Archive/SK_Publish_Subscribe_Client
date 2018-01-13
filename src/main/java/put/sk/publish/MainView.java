@@ -146,18 +146,28 @@ public class MainView {
      */
     @FXML
     public void onReadArticle() {
+        // Block button
+        this.buttonRead.setDisable(true);
+
+        // Show loader
+        this.loader(true);
+
         // Get selected article from list
         Article selectedArticle = (Article) this.listArticle.getSelectionModel().getSelectedItem();
         if(selectedArticle != null) {
             // Load text only when not null (exists selection)
-            Article t = Client.loadArticleDetails(selectedArticle);
+            Client.loadArticleDetails(selectedArticle);
 
-            // TODO Show details
-
-            System.out.println(t.getFileName());
-            System.out.println(t.getTopicName());
-            System.out.println(t.toString());
+            // Insert details
+            this.areaArticleText.setText(selectedArticle.getContent());
+            this.inputArticleTitle.setText(selectedArticle.articleDescription());
         }
+
+        // Enable button
+        this.buttonRead.setDisable(false);
+
+        // Hide loader
+        this.loader(false);
     }
 
     /**
@@ -282,8 +292,6 @@ public class MainView {
         // Get text from inputs
         String title = this.inputArticleTitle.getText().trim();
         String content = this.areaArticleText.getText().trim();
-
-        System.out.println(content);
 
         // Block button
         this.buttonSend.setDisable(true);

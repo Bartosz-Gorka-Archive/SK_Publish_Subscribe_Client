@@ -205,9 +205,16 @@ public class ConnectionService {
             // We don't get error - check
             if(!data.get(0).equals("ERROR")) {
                 // Insert data to article
-                System.out.println(data);
 
-                // TODO Article details
+                // Update article details
+                selectedArticle.setCreateDate(data.get(1));
+//                selectedArticle.setFileName(data.get(2));
+//                selectedArticle.setTitle(data.get(4));
+//                selectedArticle.setContent(data.get(5)); // TODO Enable if fix API
+                selectedArticle.setContent("FIX API and disable this mockup!");
+
+                // Set article as loaded
+                selectedArticle.setLoaded(true);
 
                 // Set action as success
                 this.actionSuccess = true;
