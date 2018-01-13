@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 
 /**
  * Main module in Publish Subscribe application
@@ -17,10 +18,10 @@ public class Client extends Application {
      * Current stage
      */
     private static Stage stage;
-
     /**
      * Connection service to allow operations with server
      */
+    private static ConnectionService server;
 
     /**
      * Main method, launch application
@@ -38,11 +39,13 @@ public class Client extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         stage = primaryStage;
-        Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
-        stage.setTitle("LoginView");
-        stage.setScene(new Scene(root, 260, 280));
-        stage.setResizable(false);
-        stage.show();
+        openMainView(); // TODO Only now, delete and uncomment code below
+        loadTopics();
+//        Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
+//        stage.setTitle("LoginView");
+//        stage.setScene(new Scene(root, 260, 280));
+//        stage.setResizable(false);
+//        stage.show();
     }
 
     /**
@@ -59,6 +62,7 @@ public class Client extends Application {
 
         // Connection
         ConnectionService connectionService = new ConnectionService(serverIP, port, userName);
+        server = connectionService;
         return connectionService.login();
     }
 
@@ -66,14 +70,41 @@ public class Client extends Application {
      * Change active window to MainView
      */
     public static void openMainView() {
+        server = new ConnectionService("127.0.0.1", 1445, "bartek"); // TODO Delete
         try {
             Parent root = FXMLLoader.load(Client.class.getResource("main.fxml"));
             stage.setTitle("Publish Subscribe");
             stage.setScene(new Scene(root, 800, 600));
             stage.setResizable(false);
+
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Load topics from API and pass to View
+     * @return ArrayList with Topics
+     */
+    public static ArrayList<Topic> loadTopics() {
+        return server.fetchAllTopics(0);
+    }
+
+    /**
+     * Load articles assigned in selected topic
+     * @param selectedTopic Topic to check
+     * @return ArrayList with articles
+     */
+    public static ArrayList<Article> loadArticles(Topic selectedTopic) {
+        return server.fetchTopicArticles(selectedTopic, 0);
+    }
+
+    /**
+     * Getter - check last action success?
+     * @return Boolean action status
+     */
+    public static boolean isActionSuccess() {
+        return server.isActionSuccess();
     }
 }

@@ -25,7 +25,7 @@
                   </Label>
                   <TextArea fx:id="areaArticleText" editable="false" layoutX="10.0" layoutY="34.0" prefHeight="166.0" prefWidth="434.0" />
                </children></AnchorPane>
-            <Button fx:id="buttonRead" disable="true" layoutX="486.0" layoutY="32.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="155.0" text="Read article">
+            <Button fx:id="buttonRead" disable="true" layoutX="486.0" layoutY="67.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="155.0" text="Read article">
                <font>
                   <Font name="Courier Oblique" size="13.0" />
                </font></Button>
@@ -48,12 +48,12 @@
                   <Font name="Courier Oblique" size="13.0" />
                </font>
             </Button>
-            <Button fx:id="buttonClear" disable="true" layoutX="486.0" layoutY="316.0" mnemonicParsing="false" onAction="#onClearText" prefHeight="27.0" prefWidth="155.0" text="Clear text">
+            <Button fx:id="buttonClear" layoutX="486.0" layoutY="316.0" mnemonicParsing="false" onAction="#onClearText" prefHeight="27.0" prefWidth="155.0" text="Clear text">
                <font>
                   <Font name="Courier Oblique" size="13.0" />
                </font>
             </Button>
-            <Button fx:id="buttonWrite" disable="true" layoutX="486.0" layoutY="68.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="155.0" text="Write new article">
+            <Button fx:id="buttonWrite" disable="true" layoutX="486.0" layoutY="102.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="155.0" text="Write new article">
                <font>
                   <Font name="Courier Oblique" size="13.0" />
                </font>
@@ -70,6 +70,11 @@
                         <Font name="Courier Oblique" size="13.0" />
                      </font></Label>
                </children></AnchorPane>
+            <Button fx:id="buttonLoadArticles" layoutX="486.0" layoutY="32.0" mnemonicParsing="false" onAction="#onLoadArticles" prefHeight="27.0" prefWidth="155.0" text="Load articles">
+               <font>
+                  <Font name="Courier Oblique" size="13.0" />
+               </font>
+            </Button>
          </children>
       </Pane>
    </children>
