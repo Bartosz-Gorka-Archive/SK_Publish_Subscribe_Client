@@ -1,5 +1,7 @@
 package put.sk.publish;
 
+import javafx.collections.ObservableList;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -79,7 +81,7 @@ public class ConnectionService {
      * Fetch all topics from API
      * @param skip Number of topics to skip
      */
-    public ArrayList<Topic> fetchAllTopics(ArrayList<Topic> topicList, int skip) {
+    public ObservableList<Topic> fetchAllTopics(ObservableList<Topic> topicList, int skip) {
         // Prepare request parameters
         ArrayList<String> requestData = new ArrayList<>();
         requestData.add("GET_QUEUES");
@@ -283,6 +285,10 @@ public class ConnectionService {
 
                 // Return success
                 return true;
+            } else {
+                if(data.size() > 1) {
+                    this.actionMessage = data.get(1);
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -325,6 +331,10 @@ public class ConnectionService {
 
                 // Return success
                 return true;
+            } else {
+                if(data.size() > 1) {
+                    this.actionMessage = data.get(1);
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -371,6 +381,10 @@ public class ConnectionService {
 
                 // Return success
                 return true;
+            } else {
+                if(data.size() > 1) {
+                    this.actionMessage = data.get(1);
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();

@@ -59,7 +59,7 @@ public class APIParser {
         List<String> splitList = Arrays.asList(split);
 
         // Prepare ArrayList, add all elements from List and drop last (only new lines)
-        ArrayList<String> responseData = new ArrayList();
+        ArrayList<String> responseData = new ArrayList<>();
         responseData.addAll(splitList);
         responseData.remove(responseData.size() - 1);
 

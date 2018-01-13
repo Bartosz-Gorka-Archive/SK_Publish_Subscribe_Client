@@ -1,6 +1,9 @@
 package put.sk.publish;
 
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -25,7 +28,15 @@ public class Client extends Application {
     /**
      * All topics in API
      */
-    private static ArrayList<Topic> topicList = new ArrayList<>();
+    private static volatile ObservableList<Topic> topicList;
+    /**
+     * Topic list guardian
+     */
+    private final static Object guardTopicList = new Object();
+    /**
+     * Application run status
+     */
+    private static boolean APPLICATION_RUN = true;
 
     /**
      * Main method, launch application
@@ -51,6 +62,18 @@ public class Client extends Application {
     }
 
     /**
+     * Custom stop method
+     */
+    @Override
+    public void stop() {
+        // Disable run application
+        APPLICATION_RUN = false;
+
+        // Say bye
+        System.out.println("Bye application killer!");
+    }
+
+    /**
      * Login to server API
      * @param IP Server IP or domain
      * @param port Port
@@ -73,6 +96,10 @@ public class Client extends Application {
      */
     public static void openMainView() {
         try {
+            // Topic list
+            topicList = FXCollections.observableList(new ArrayList<>());
+
+            // View
             Parent root = FXMLLoader.load(Client.class.getResource("main.fxml"));
             stage.setTitle("Publish Subscribe");
             stage.setScene(new Scene(root, 660, 630));
@@ -80,6 +107,30 @@ public class Client extends Application {
             stage.setY(stage.getY() / 2);
             stage.setResizable(false);
             stage.show();
+
+
+            // Thread - refresh list with topics
+            new Thread() {
+                @Override
+                public void run() {
+                    super.run();
+
+                    while(APPLICATION_RUN) {
+                        try {
+                            sleep(60_000);
+                        } catch (InterruptedException e) {}
+
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                System.out.println("Refresh topics");
+                                Client.loadTopics();
+                            }
+                        });
+                    }
+                }
+            }.start();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -87,21 +138,24 @@ public class Client extends Application {
 
     /**
      * Load topics from API and pass to View
-     * @return ArrayList with Topics
+     * @return ObservableList with Topics
      */
-    public static ArrayList<Topic> loadTopics() {
-        // Count topics on start
-        int lastDownload = -1;
-        int count = topicList.size();
+    public static ObservableList<Topic> loadTopics() {
+        // To reduce bugs with threads we must prepare guardian
+        synchronized (guardTopicList) {
+            // Count topics on start
+            int lastDownload = -1;
+            int count = topicList.size();
 
-        // Load topics
-        while(lastDownload != count) {
-            lastDownload = count;
-            server.fetchAllTopics(topicList, count);
-            count = topicList.size();
+            // Load topics
+            while (lastDownload != count) {
+                lastDownload = count;
+                server.fetchAllTopics(topicList, count);
+                count = topicList.size();
+            }
+
+            return topicList;
         }
-
-        return topicList;
     }
 
     /**

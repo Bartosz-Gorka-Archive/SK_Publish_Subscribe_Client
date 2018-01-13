@@ -153,9 +153,7 @@ public class MainView {
      */
     @FXML
     public void loadTopicList() {
-        ArrayList<Topic> topics = Client.loadTopics();
-        ObservableList<Topic> topicList = FXCollections.observableList(topics);
-        this.listQueue.setItems(topicList);
+        this.listQueue.setItems(Client.loadTopics());
         this.inputServerResponse.setText("Topics loaded.");
     }
 
@@ -270,15 +268,19 @@ public class MainView {
         // Get text from input
         String topicName = this.inputTopicName.getText().trim();
 
-        // Try add new topic
-        if(Client.addNewTopic(topicName)) {
-            // Success - clear input, load topic list
-            this.inputTopicName.clear();
-            this.loadTopicList();
-            this.inputServerResponse.setText("Topic added.");
+        if(!topicName.isEmpty()) {
+            // Try add new topic
+            if (Client.addNewTopic(topicName)) {
+                // Success - clear input, load topic list
+                this.inputTopicName.clear();
+                this.loadTopicList();
+                this.inputServerResponse.setText("Topic added.");
+            } else {
+                // Show error
+                this.inputServerResponse.setText("Can not add new topic.");
+            }
         } else {
-            // Show error
-            this.inputServerResponse.setText("Can not add new topic.");
+            this.inputServerResponse.setText("Topic must have name.");
         }
 
         // Enable button
@@ -300,8 +302,11 @@ public class MainView {
         Topic selectedTopic = (Topic) this.listQueue.getSelectionModel().getSelectedItem();
         if(selectedTopic != null) {
             // Send action to server
-            Client.addSubscribe(selectedTopic);
-            this.inputServerResponse.setText("Subscription applied.");
+            if(Client.addSubscribe(selectedTopic)) {
+                this.inputServerResponse.setText("Subscription applied.");
+            } else {
+                this.inputServerResponse.setText(Client.getAPIResponse());
+            }
         } else {
             // Set error message
             this.inputServerResponse.setText("You mast select topic.");
@@ -327,7 +332,11 @@ public class MainView {
         if(selectedTopic != null) {
             // Check size
             if(checkSize(title, 1, 50) && checkSize(content, 1, 11000)) {
-                Client.addNewArticle(selectedTopic, title, content);
+                if(Client.addNewArticle(selectedTopic, title, content)) {
+                    this.inputServerResponse.setText("Article sent.");
+                } else {
+                    this.inputServerResponse.setText(Client.getAPIResponse());
+                }
                 this.prepareSendEnv(false);
                 this.inputServerResponse.setText("Article sent.");
             }
