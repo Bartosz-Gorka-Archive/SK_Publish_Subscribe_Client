@@ -46,7 +46,7 @@ public class ConnectionService {
      */
     public boolean login() {
         // Prepare request parameters
-        ArrayList<String> requestData = new ArrayList();
+        ArrayList<String> requestData = new ArrayList<>();
         requestData.add("LOGIN_C");
         requestData.add(USERNAME);
 
@@ -79,12 +79,15 @@ public class ConnectionService {
      * Fetch all topics from API
      * @param skip Number of topics to skip
      */
-    public ArrayList<Topic> fetchAllTopics(int skip) {
+    public ArrayList<Topic> fetchAllTopics(ArrayList<Topic> topicList, int skip) {
         // Prepare request parameters
-        ArrayList<String> requestData = new ArrayList();
+        ArrayList<String> requestData = new ArrayList<>();
         requestData.add("GET_QUEUES");
         requestData.add(USERNAME);
         requestData.add(Integer.toString(skip));
+
+        // Set action as fail
+        this.actionSuccess = false;
 
         // Create API Parser
         APIParser apiParser = new APIParser();
@@ -96,10 +99,9 @@ public class ConnectionService {
             // Transfer data to API, receive and parse response
             String response = connection.transfer(request);
             ArrayList<String> data = apiParser.parseResponse(response);
-            this.actionSuccess = true;
 
-            // Prepare result
-            ArrayList<Topic> result = new ArrayList<>(data.size());
+            // Correct action
+            this.actionSuccess = true;
 
             // Create new topic, set title
             for (String title : data) {
@@ -108,19 +110,15 @@ public class ConnectionService {
                     break;
                 } else {
                     Topic topic = new Topic(title);
-                    result.add(topic);
+                    topicList.add(topic);
                 }
             }
-
-            // Return result
-            return result;
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        this.actionSuccess = false;
-        // Return empty list
-        return new ArrayList<>();
+        // Return result
+        return topicList;
     }
 
     /**
@@ -131,7 +129,7 @@ public class ConnectionService {
      */
     public ArrayList<Article> fetchTopicArticles(Topic selectedTopic, int skip) {
         // Prepare request parameters
-        ArrayList<String> requestData = new ArrayList();
+        ArrayList<String> requestData = new ArrayList<>();
         requestData.add("GET_ALL_ARTICLES");
         requestData.add(USERNAME);
         requestData.add(selectedTopic.getName());
@@ -153,7 +151,6 @@ public class ConnectionService {
             } else {
                 // Prepare result
                 int resultSize = data.size();
-                ArrayList<Article> result = new ArrayList<>(resultSize);
 
                 // Prepare articles list
                 for(int i = 0; i < resultSize; i += 2) {
@@ -185,7 +182,7 @@ public class ConnectionService {
      */
     public Article loadArticleDetails(Article selectedArticle) {
         // Prepare request parameters
-        ArrayList<String> requestData = new ArrayList();
+        ArrayList<String> requestData = new ArrayList<>();
         requestData.add("GET_ARTICLE");
         requestData.add(USERNAME);
         requestData.add(selectedArticle.getTopicName());
@@ -246,7 +243,7 @@ public class ConnectionService {
      */
     public boolean addTopic(String topicName) {
         // Prepare request parameters
-        ArrayList<String> requestData = new ArrayList();
+        ArrayList<String> requestData = new ArrayList<>();
         requestData.add("ADD_QUEUE");
         requestData.add(USERNAME);
         requestData.add(topicName);
@@ -288,7 +285,7 @@ public class ConnectionService {
      */
     public boolean addSubscribe(Topic selectedTopic) {
         // Prepare request parameters
-        ArrayList<String> requestData = new ArrayList();
+        ArrayList<String> requestData = new ArrayList<>();
         requestData.add("ADD_SUBSCRIBER");
         requestData.add(USERNAME);
         requestData.add(selectedTopic.getName());
@@ -332,7 +329,7 @@ public class ConnectionService {
      */
     public boolean addArticle(Topic selectedTopic, String title, String content) {
         // Prepare request parameters
-        ArrayList<String> requestData = new ArrayList();
+        ArrayList<String> requestData = new ArrayList<>();
         requestData.add("ADD_ARTICLE");
         requestData.add(USERNAME);
         requestData.add(selectedTopic.getName());

@@ -22,6 +22,10 @@ public class Client extends Application {
      * Connection service to allow operations with server
      */
     private static ConnectionService server;
+    /**
+     * All topics in API
+     */
+    private static ArrayList<Topic> topicList = new ArrayList<>();
 
     /**
      * Main method, launch application
@@ -87,7 +91,18 @@ public class Client extends Application {
      * @return ArrayList with Topics
      */
     public static ArrayList<Topic> loadTopics() {
-        return server.fetchAllTopics(0);
+        // Count topics on start
+        int lastDownload = -1;
+        int count = 0;
+
+        // Load topics
+        while(lastDownload != count) {
+            lastDownload = count;
+            server.fetchAllTopics(topicList, count);
+            count = topicList.size();
+        }
+
+        return topicList;
     }
 
     /**

@@ -42,14 +42,6 @@ public class Topic {
     }
 
     /**
-     * Set articles in topic
-     * @param articles Articles as ArrayList
-     */
-    public void setArticles(ArrayList<Article> articles) {
-        this.articles = articles;
-    }
-
-    /**
      * Add article to Topic
      * @param article Article to add
      */
