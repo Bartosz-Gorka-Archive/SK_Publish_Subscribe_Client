@@ -117,7 +117,14 @@ public class Client extends Application {
 
                     while(APPLICATION_RUN) {
                         try {
-                            sleep(60_000);
+
+                            for(int i = 0; i < 60; i++) {
+                                sleep(1000);
+
+                                if(!APPLICATION_RUN) {
+                                    break;
+                                }
+                            }
                         } catch (InterruptedException e) {}
 
                         Platform.runLater(new Runnable() {
