@@ -2,8 +2,6 @@ package put.sk.publish;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Connection service to enable sending and receive message
@@ -105,8 +103,13 @@ public class ConnectionService {
 
             // Create new topic, set title
             for (String title : data) {
-                Topic topic = new Topic(title);
-                result.add(topic);
+                // No more records - break
+                if(title.equals("NOMORE")) {
+                    break;
+                } else {
+                    Topic topic = new Topic(title);
+                    result.add(topic);
+                }
             }
 
             // Return result
@@ -154,8 +157,14 @@ public class ConnectionService {
 
                 // Prepare articles list
                 for(int i = 0; i < resultSize; i += 2) {
-                    Article article = new Article(data.get(i), data.get(i+1), selectedTopic);
-                    result.add(article);
+                    // If NO MORE - break download
+                    if(data.get(i).equals("NOMORE")) {
+                        break;
+                    } else {
+                        // Read articles
+                        Article article = new Article(data.get(i), data.get(i + 1), selectedTopic);
+                        result.add(article);
+                    }
                 }
 
                 // Append result to topic
