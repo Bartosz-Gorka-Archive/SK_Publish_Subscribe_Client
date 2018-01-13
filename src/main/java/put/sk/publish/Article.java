@@ -16,6 +16,10 @@ public class Article {
      * Topic name
      */
     private String topicName;
+    /**
+     * Loaded details status
+     */
+    private boolean loaded;
 
     /**
      * New article detail
@@ -26,6 +30,7 @@ public class Article {
         this.fileName = fileName;
         this.title = title;
         this.topicName = topicName;
+        this.loaded = false;
     }
 
     /**
@@ -51,5 +56,13 @@ public class Article {
      */
     public String getTopicName() {
         return this.topicName;
+    }
+
+    /**
+     * Check loaded details in article
+     * @return Status of load
+     */
+    public boolean isLoaded() {
+        return loaded;
     }
 }

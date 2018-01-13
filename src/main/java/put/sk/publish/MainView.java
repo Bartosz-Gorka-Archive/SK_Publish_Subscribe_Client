@@ -60,6 +60,10 @@ public class MainView {
      * Button load articles
      */
     public Button buttonLoadArticles;
+    /**
+     * Button cancel send new article
+     */
+    public Button buttonCancel;
 
     /**
      * Clear inputs to enable prepare new article
@@ -75,7 +79,7 @@ public class MainView {
     @FXML
     public void initialize() {
         // Topic list update
-        loadTopicList();
+        this.loadTopicList();
     }
 
     /**
@@ -84,13 +88,6 @@ public class MainView {
     private void clearInputs() {
         this.inputArticleTitle.clear();
         this.areaArticleText.clear();
-    }
-
-    private void blockButtons(boolean status) {
-        this.areaArticleText.setDisable(status);
-        this.inputArticleTitle.setDisable(status);
-        this.listArticle.setDisable(status);
-        this.listQueue.setDisable(status);
     }
 
     /**
@@ -119,10 +116,69 @@ public class MainView {
             ArrayList<Article> articles = Client.loadArticles(selectedTopic);
             ObservableList<Article> articlesList = FXCollections.observableList(articles);
             this.listArticle.setItems(articlesList);
-            System.out.println(Client.isActionSuccess());
             this.buttonRead.setDisable(!Client.isActionSuccess());
         }
 
+        // TODO Enable add subscription to topic
+    }
+
+    /**
+     * Read selected article - download text
+     */
+    public void onReadArticle() {
+        // Get selected article from list
+        Article selectedArticle = (Article) this.listArticle.getSelectionModel().getSelectedItem();
+        if(selectedArticle != null) {
+            // Load text only when not null (exists selection)
+            Article t = Client.loadArticleDetails(selectedArticle);
+
+            // TODO Show details
+
+            System.out.println(t.getFileName());
+            System.out.println(t.getTopicName());
+            System.out.println(t.toString());
+        }
+    }
+
+    /**
+     * Write new article - action
+     */
+    public void onWriteNewArticle() {
+        Topic selectedTopic = (Topic) this.listQueue.getSelectionModel().getSelectedItem();
+        if(selectedTopic != null) {
+            this.prepareSendEnv(true);
+        }
+    }
+
+    /**
+     * Cancel prepare new article
+     */
+    public void onCancelSend() {
+        this.prepareSendEnv(false);
+    }
+
+    /**
+     * Prepare sending environment - disable / enable buttons, list ...
+     * @param status Boolean sending ready (true)
+     */
+    private void prepareSendEnv(boolean status) {
+        // Clear inputs
+        this.clearInputs();
+
+        // Buttons
+        this.buttonLoadArticles.setDisable(status);
+        this.buttonRead.setDisable(status);
+        this.buttonWrite.setDisable(status);
+
+        // Lists
+        this.listArticle.setDisable(status);
+        this.listQueue.setDisable(status);
+
+        // Sending button
+        this.buttonSend.setDisable(!status);
+
+        // Cancel button
+        this.buttonCancel.setVisible(status);
     }
 
 }

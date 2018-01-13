@@ -40,7 +40,6 @@ public class Client extends Application {
     public void start(Stage primaryStage) throws Exception{
         stage = primaryStage;
         openMainView(); // TODO Only now, delete and uncomment code below
-        loadTopics();
 //        Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
 //        stage.setTitle("LoginView");
 //        stage.setScene(new Scene(root, 260, 280));
@@ -106,5 +105,20 @@ public class Client extends Application {
      */
     public static boolean isActionSuccess() {
         return server.isActionSuccess();
+    }
+
+    /**
+     * Load article details
+     * @param selectedArticle Article to load
+     * @return Article details
+     */
+    public static Article loadArticleDetails(Article selectedArticle) {
+        if(selectedArticle.isLoaded()) {
+            // Data already in article object
+            return selectedArticle;
+        } else {
+            // We must load data from API
+            return server.loadArticleDetails(selectedArticle);
+        }
     }
 }

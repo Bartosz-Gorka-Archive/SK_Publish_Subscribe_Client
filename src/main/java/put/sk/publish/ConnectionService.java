@@ -92,6 +92,7 @@ public class ConnectionService {
             // Transfer data to API, receive and parse response
             String response = connection.transfer(request);
             ArrayList<String> data = apiParser.parseResponse(response);
+            this.actionSuccess = true;
 
             // Prepare result
             ArrayList<Topic> result = new ArrayList<>(data.size());
@@ -108,6 +109,7 @@ public class ConnectionService {
             e.printStackTrace();
         }
 
+        this.actionSuccess = false;
         // Return empty list
         return new ArrayList<>();
     }
@@ -137,8 +139,6 @@ public class ConnectionService {
             String response = connection.transfer(request);
             ArrayList<String> data = apiParser.parseResponse(response);
 
-            System.out.println(data);
-
             if(data.get(0).equals("ERROR")) {
                 this.actionSuccess = false;
             } else {
@@ -165,6 +165,51 @@ public class ConnectionService {
 
         // Return empty list
         return new ArrayList<>();
+    }
+
+    /**
+     * Load article details from API
+     * @param selectedArticle Article to check and load details
+     * @return Article with loaded details
+     */
+    public Article loadArticleDetails(Article selectedArticle) {
+        // Prepare request parameters
+        ArrayList<String> requestData = new ArrayList();
+        requestData.add("GET_ARTICLE");
+        requestData.add(USERNAME);
+        requestData.add(selectedArticle.getTopicName());
+        requestData.add(selectedArticle.getFileName());
+
+        // Create API Parser
+        APIParser apiParser = new APIParser();
+        String request = apiParser.buildRequest(requestData);
+
+        // Action status
+        this.actionSuccess = false;
+
+        // Connection
+        Connection connection = new Connection(IP_ADDRESS, IP_PORT);
+        try {
+            // Transfer data to API, receive and parse response
+            String response = connection.transfer(request);
+            ArrayList<String> data = apiParser.parseResponse(response);
+
+            // We don't get error - check
+            if(!data.get(0).equals("ERROR")) {
+                // Insert data to article
+                System.out.println(data);
+
+                // TODO Append data to article
+
+                // Set action as success
+                this.actionSuccess = true;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Return article
+        return selectedArticle;
     }
 
     /**
