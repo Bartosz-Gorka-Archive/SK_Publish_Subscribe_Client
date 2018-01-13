@@ -336,8 +336,6 @@ public class ConnectionService {
         requestData.add(title);
         requestData.add(content);
 
-        System.out.println(requestData);
-
         // Create API Parser
         APIParser apiParser = new APIParser();
         String request = apiParser.buildRequest(requestData);
@@ -351,7 +349,6 @@ public class ConnectionService {
             // Transfer data to API, receive and parse response
             String response = connection.transfer(request);
             ArrayList<String> data = apiParser.parseResponse(response);
-            System.out.println(data);
 
             // We don't get error - check
             if(data.get(0).equals("OK")) {

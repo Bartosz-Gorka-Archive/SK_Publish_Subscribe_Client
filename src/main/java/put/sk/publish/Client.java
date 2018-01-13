@@ -93,7 +93,7 @@ public class Client extends Application {
     public static ArrayList<Topic> loadTopics() {
         // Count topics on start
         int lastDownload = -1;
-        int count = 0;
+        int count = topicList.size();
 
         // Load topics
         while(lastDownload != count) {
@@ -113,7 +113,7 @@ public class Client extends Application {
     public static ArrayList<Article> loadArticles(Topic selectedTopic) {
         // Count articles on start
         int lastDownload = -1;
-        int count = 0;
+        int count = selectedTopic.getArticles().size();
 
         // Load articles
         while(lastDownload != count) {
