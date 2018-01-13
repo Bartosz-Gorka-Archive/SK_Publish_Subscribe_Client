@@ -3,6 +3,7 @@ package put.sk.publish;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
@@ -100,6 +101,31 @@ public class MainView {
 
         // Topic list update
         this.loadTopicList();
+
+        this.areaArticleText.addEventFilter(KeyEvent.KEY_TYPED, new EventHandler<KeyEvent>() {
+            public void handle(KeyEvent event) {
+                if (areaArticleText.getText().length() > 11000) {
+                    event.consume();
+                }
+            }
+        });
+
+        this.inputTopicName.addEventFilter(KeyEvent.KEY_TYPED, new EventHandler<KeyEvent>() {
+            public void handle(KeyEvent event) {
+                if (inputTopicName.getText().length() > 50) {
+                    event.consume();
+                }
+            }
+        });
+
+        this.inputArticleTitle.addEventFilter(KeyEvent.KEY_TYPED, new EventHandler<KeyEvent>() {
+            public void handle(KeyEvent event) {
+                if (inputArticleTitle.getText().length() > 50) {
+                    event.consume();
+                }
+            }
+        });
+
 
         // Hide loader
         this.loader(false);
@@ -318,6 +344,13 @@ public class MainView {
         this.buttonSend.setDisable(false);
     }
 
+    /**
+     * Check text size between [min; max]
+     * @param text Text to check
+     * @param min Min length
+     * @param max Max length
+     * @return Check status, true if correct
+     */
     private boolean checkSize(String text, int min, int max) {
         int length = text.length();
         return (length >= min && length <= max);
