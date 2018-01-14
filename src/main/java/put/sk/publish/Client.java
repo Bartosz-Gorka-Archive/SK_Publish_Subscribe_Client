@@ -116,6 +116,16 @@ public class Client extends Application {
                     super.run();
 
                     while(APPLICATION_RUN) {
+                        // Load topics
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                System.out.println("Refresh topics");
+                                Client.loadTopics();
+                            }
+                        });
+
+                        // Sleep 1 min
                         try {
 
                             for(int i = 0; i < 60; i++) {
@@ -126,14 +136,6 @@ public class Client extends Application {
                                 }
                             }
                         } catch (InterruptedException e) {}
-
-                        Platform.runLater(new Runnable() {
-                            @Override
-                            public void run() {
-                                System.out.println("Refresh topics");
-                                Client.loadTopics();
-                            }
-                        });
                     }
                 }
             }.start();
@@ -141,6 +143,14 @@ public class Client extends Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Getter - Observable list with topics
+     * @return Topics list
+     */
+    public static ObservableList<Topic> getTopicList() {
+        return topicList;
     }
 
     /**

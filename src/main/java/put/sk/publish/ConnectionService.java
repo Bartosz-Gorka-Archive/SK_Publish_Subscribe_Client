@@ -209,14 +209,14 @@ public class ConnectionService {
 
             // We don't get error - check
             if(!data.get(0).equals("ERROR")) {
-                // Insert data to article
-
                 // Update article details
-                selectedArticle.setCreateDate(data.get(1));
-//                selectedArticle.setFileName(data.get(2));
-//                selectedArticle.setTitle(data.get(4));
-//                selectedArticle.setContent(data.get(5)); // TODO Enable if fix API
-                selectedArticle.setContent("FIX API and disable this mockup!");
+                try {
+                    selectedArticle.setCreateDate(data.get(1));
+                    selectedArticle.setTitle(data.get(2));
+                    selectedArticle.setContent(data.get(3));
+                } catch(ArrayIndexOutOfBoundsException ex) {
+                    ex.printStackTrace();
+                }
 
                 // Set article as loaded
                 selectedArticle.setLoaded(true);

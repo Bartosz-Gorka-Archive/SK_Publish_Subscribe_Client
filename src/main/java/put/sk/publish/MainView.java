@@ -153,7 +153,7 @@ public class MainView {
      */
     @FXML
     public void loadTopicList() {
-        this.listQueue.setItems(Client.loadTopics());
+        this.listQueue.setItems(Client.getTopicList());
         this.inputServerResponse.setText("Topics loaded.");
     }
 
