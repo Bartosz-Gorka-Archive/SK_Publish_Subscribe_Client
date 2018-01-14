@@ -46,6 +46,7 @@ public class Connection {
      * Transfer data to server, receive response
      * @param message Message to server
      * @return Server response
+     * @throws IOException Invalid socket
      */
     public String transfer(String message) throws IOException {
         Socket socket = new Socket(hostIP, portNumber);
@@ -69,8 +70,7 @@ public class Connection {
             byte[] responseBytes = new byte[PACKAGE_LENGTH];
             InputStream inputStream = socket.getInputStream();
 
-            int MAX_LENGTH = PACKAGE_LENGTH;
-            for(int i = 0; i < MAX_LENGTH; i++) {
+            for(int i = 0; i < PACKAGE_LENGTH; i++) {
                 int singleChar = inputStream.read();
                 if (singleChar >= 0) {
                     responseBytes[i] = (byte) singleChar;

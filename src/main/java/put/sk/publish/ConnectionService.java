@@ -79,7 +79,9 @@ public class ConnectionService {
 
     /**
      * Fetch all topics from API
+     * @param topicList Observable list with topics
      * @param skip Number of topics to skip
+     * @return Updated input topics list
      */
     public ObservableList<Topic> fetchAllTopics(ObservableList<Topic> topicList, int skip) {
         // Prepare request parameters

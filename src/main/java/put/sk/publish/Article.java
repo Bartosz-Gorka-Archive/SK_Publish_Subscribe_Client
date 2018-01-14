@@ -33,6 +33,7 @@ public class Article {
      * New article detail
      * @param fileName Article fileName
      * @param title Article title
+     * @param topic Topic - parent
      */
     public Article(String fileName, String title, Topic topic) {
         this.fileName = fileName;
@@ -84,16 +85,8 @@ public class Article {
     }
 
     /**
-     * Set Article FileName
-     * @param fileName FileName
-     */
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
-    }
-
-    /**
      * Mark article as loader or not
-     * @param loaded
+     * @param loaded Loaded status
      */
     public void setLoaded(boolean loaded) {
         this.loaded = loaded;

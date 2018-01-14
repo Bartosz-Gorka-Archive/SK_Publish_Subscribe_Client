@@ -79,6 +79,7 @@ public class Client extends Application {
      * @param port Port
      * @param userName Username
      * @return Action status, true if correct login
+     * @throws UnknownHostException Unknown host error
      */
     public static boolean loginToServer(String IP, int port, String userName) throws UnknownHostException {
         // Check IP from Domain name
